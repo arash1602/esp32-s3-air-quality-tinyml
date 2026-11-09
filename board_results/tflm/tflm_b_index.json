@@ -1,0 +1,134 @@
+[
+ {
+  "index": 0,
+  "kind": "tflm",
+  "horizon": 1,
+  "design": "multi",
+  "arch": "GRU",
+  "precision": "tfl_f32",
+  "fold": "heldout-Zagreb",
+  "bytes": 272648,
+  "key": "h1_multi_GRU_f32"
+ },
+ {
+  "index": 1,
+  "kind": "tflm",
+  "horizon": 1,
+  "design": "multi",
+  "arch": "GRU",
+  "precision": "tfl_int8",
+  "fold": "heldout-Zagreb",
+  "bytes": 398288,
+  "key": "h1_multi_GRU_int8"
+ },
+ {
+  "index": 2,
+  "kind": "tflm",
+  "horizon": 1,
+  "design": "single-blocked",
+  "arch": "GRU",
+  "precision": "tfl_f32",
+  "fold": "Antwerp-b1",
+  "bytes": 272648,
+  "key": "h1_single-blocked_GRU_f32"
+ },
+ {
+  "index": 3,
+  "kind": "tflm",
+  "horizon": 1,
+  "design": "single-blocked",
+  "arch": "GRU",
+  "precision": "tfl_int8",
+  "fold": "Antwerp-b1",
+  "bytes": 398288,
+  "key": "h1_single-blocked_GRU_int8"
+ },
+ {
+  "index": 4,
+  "kind": "tflm",
+  "horizon": 12,
+  "design": "multi",
+  "arch": "GRU",
+  "precision": "tfl_f32",
+  "fold": "heldout-Zagreb",
+  "bytes": 130588,
+  "key": "h12_multi_GRU_f32"
+ },
+ {
+  "index": 5,
+  "kind": "tflm",
+  "horizon": 12,
+  "design": "multi",
+  "arch": "GRU",
+  "precision": "tfl_int8",
+  "fold": "heldout-Zagreb",
+  "bytes": 232696,
+  "key": "h12_multi_GRU_int8"
+ },
+ {
+  "index": 6,
+  "kind": "tflm",
+  "horizon": 12,
+  "design": "single-blocked",
+  "arch": "GRU",
+  "precision": "tfl_f32",
+  "fold": "Antwerp-b1",
+  "bytes": 1633988,
+  "key": "h12_single-blocked_GRU_f32"
+ },
+ {
+  "index": 7,
+  "kind": "tflm",
+  "horizon": 12,
+  "design": "single-blocked",
+  "arch": "GRU",
+  "precision": "tfl_int8",
+  "fold": "Antwerp-b1",
+  "bytes": 1816016,
+  "key": "h12_single-blocked_GRU_int8"
+ },
+ {
+  "index": 8,
+  "kind": "tflm",
+  "horizon": 24,
+  "design": "multi",
+  "arch": "GRU",
+  "precision": "tfl_f32",
+  "fold": "heldout-Zagreb",
+  "bytes": 78728,
+  "key": "h24_multi_GRU_f32"
+ },
+ {
+  "index": 9,
+  "kind": "tflm",
+  "horizon": 24,
+  "design": "multi",
+  "arch": "GRU",
+  "precision": "tfl_int8",
+  "fold": "heldout-Zagreb",
+  "bytes": 153392,
+  "key": "h24_multi_GRU_int8"
+ },
+ {
+  "index": 10,
+  "kind": "tflm",
+  "horizon": 24,
+  "design": "single-blocked",
+  "arch": "GRU",
+  "precision": "tfl_f32",
+  "fold": "Antwerp-b1",
+  "bytes": 78728,
+  "key": "h24_single-blocked_GRU_f32"
+ },
+ {
+  "index": 11,
+  "kind": "tflm",
+  "horizon": 24,
+  "design": "single-blocked",
+  "arch": "GRU",
+  "precision": "tfl_int8",
+  "fold": "Antwerp-b1",
+  "bytes": 153392,
+  "key": "h24_single-blocked_GRU_int8"
+ }
+]

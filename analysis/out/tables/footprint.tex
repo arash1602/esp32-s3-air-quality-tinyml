@@ -1,0 +1,15 @@
+\begin{tabular}{llrrr}
+\toprule
+Model & Weights & Parameters & Model file (KB) & MAC/prediction \\
+\midrule
+WHO rule & float64 & 0 & 0.1 & -- \\
+Logistic regression & float64 & 6 & 0.2 & -- \\
+Boosted trees & float64 & 3{,}900 nodes (730--18{,}300) & 62 (12--287) & -- \\
+GRU & float32 & 51{,}969 (1{,}121--349{,}185) & 203 (4.5--1364) & 1{,}226k (24k--8{,}304k) \\
+ & int8 & 51{,}969 (1{,}121--349{,}185) & 56 (1.9--362) & 1{,}226k (24k--8{,}304k) \\
+TCN & float32 & 22{,}465 (1{,}873--87{,}937) & 88 (7.6--344) & 531k (43k--2{,}095k) \\
+ & int8 & 22{,}465 (1{,}873--87{,}937) & 24 (2.6--90) & 531k (43k--2{,}095k) \\
+CNN--GRU hybrid & float32 & 21{,}569 (8{,}481--31{,}937) & 85 (33--125) & 344k (101k--373k) \\
+ & int8 & 21{,}569 (8{,}481--31{,}937) & 25 (11--36) & 344k (101k--373k) \\
+\bottomrule
+\end{tabular}

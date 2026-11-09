@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Effect of the flash-aware kernels (Section~\ref{sec:flash}), weights read from flash: median latency with straightforward kernels and with the final ones, for the model of each family and precision that gains most. Outputs are bit-identical.}
+\label{tab:speedup}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrr}
+\toprule
+Model & Weights & File (KB) & Before (ms) & After (ms) & Gain \\
+\midrule
+GRU & float32 & 1364 & 8{,}294 & 3{,}456 & 2.4$\times$ \\
+GRU & int8 & 362 & 2{,}257 & 361 & 6.3$\times$ \\
+TCN & float32 & 247 & 1{,}461 & 90.6 & 16.1$\times$ \\
+TCN & int8 & 18 & 13.1 & 9.62 & 1.4$\times$ \\
+CNN--GRU & float32 & 77 & 336 & 32.1 & 10.5$\times$ \\
+CNN--GRU & int8 & 23 & 9.43 & 8.84 & 1.1$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}

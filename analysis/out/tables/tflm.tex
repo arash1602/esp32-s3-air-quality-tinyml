@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{The same 36 trained networks (the fidelity configurations: three horizons, within and across cities) run by TensorFlow Lite Micro (TFLM, esp-tflite-micro~1.4.2 with ESP-NN kernels, ESP-IDF~6.1) and by the library of this paper on the same board. Fit: networks that run with a 256\,KB tensor arena. Arena: TFLM's working memory per network. Time and energy: ratio TFLM/aq\_infer per network (PPK2, 3.3\,V, energy above idle). Decisions changed: TFLM against the reference on all test windows of each fold (PC interpreter). TFLM's 8-bit mode quantizes activations as well as weights; GRUs are unrolled over the 24 time steps, as TFLM has no GRU operator.}
+\label{tab:tflm}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrrrr}
+\toprule
+ & & & \multicolumn{2}{c}{Model file (KB)} & TFLM arena & \multicolumn{2}{c}{TFLM / aq\_infer} & Decisions changed \\
+\cmidrule(lr){4-5}\cmidrule(lr){7-8}
+Network & Weights & Fit & aq\_infer & TFLM & (KB) & Time & Energy & by TFLM \\
+\midrule
+TCN & float32 & 6/6 & 10.9--166 & 14.9--171 & 9.0--31.3 & 1.9--4.3 & 2.8--4.1 & 0/17{,}704 \\
+TCN & 8-bit & 6/6 & 3.4--44.8 & 9.9--59.8 & 5.2--20.9 & 8.6--14.1 & 9.1--15.3 & 80/17{,}704 \\
+CNN--GRU & float32 & 6/6 & 33.4--113 & 98.7--178 & 81.7--91.2 & 0.9--3.0 & 1.5--3.2 & 0/17{,}704 \\
+CNN--GRU & 8-bit & 6/6 & 10.7--32.5 & 162--248 & 111--149 & 1.7--3.0 & 1.4--2.2 & 108/17{,}704 \\
+GRU & float32 & 5/6 & 11.0--1364 & 76.9--1596 & 79.6--140 & 0.4--3.5 & 0.7--2.6 & 0/17{,}704 \\
+GRU & 8-bit & 5/6 & 4.2--362 & 150--1773 & 108--221 & 1.8--5.7 & 1.5--4.0 & 75/17{,}704 \\
+\bottomrule
+\end{tabular}
+\end{table*}

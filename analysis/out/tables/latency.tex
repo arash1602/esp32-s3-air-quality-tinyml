@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\caption{Latency and energy of one prediction on the ESP32-S3 at 240\,MHz, range over the models measured ($n$). Latency: median over at least 10 (up to 1{,}000) repetitions; Flash: weights read in place, as deployed; RAM: model file copied to RAM first ($^{*}$some models of the row do not fit). Energy: energy above idle at the 3.3\,V supply, Eq.~(\ref{eq:energy}), measured over marked predictions with weights in flash.}
+\label{tab:latency}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrrrr}
+\toprule
+ & & & & \multicolumn{2}{c}{Latency (ms)} & Energy \\
+\cmidrule(lr){5-6}
+Model & Weights & $n$ & KB & Flash & RAM & (mJ) \\
+\midrule
+WHO rule & float64 & 6 & 0.1 & 0.28 & 0.28 & 0.02 \\
+Logistic regr. & float64 & 6 & 0.2 & 0.29 & 0.29 & 0.02 \\
+Boosted trees & float64 & 7 & 62--287 & 6.56--19.4 & 1.12--1.22$^{*}$ & 0.44--1.36 \\
+GRU & float32 & 6 & 11--1364 & 4.92--3{,}456 & 4.92--24.1$^{*}$ & 0.48--139 \\
+GRU & int8 & 6 & 4.2--362 & 5.77--361 & 5.77--30.4$^{*}$ & 0.57--31.4 \\
+TCN & float32 & 6 & 59--247 & 22.6--90.6 & 8.87--9.07$^{*}$ & 1.37--5.11 \\
+TCN & int8 & 6 & 17--65 & 9.37--45.6 & 9.37--32.9 & 0.90--3.60 \\
+CNN--GRU & float32 & 6 & 66--125 & 21.9--44.5 & 6.02--14.4$^{*}$ & 1.21--2.54 \\
+CNN--GRU & int8 & 6 & 20--36 & 7.40--23.0 & 7.40--18.9 & 0.77--2.18 \\
+\bottomrule
+\end{tabular}
+\end{table}

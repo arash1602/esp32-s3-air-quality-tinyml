@@ -1,0 +1,15 @@
+\begin{tabular}{llrrr}
+\toprule
+Model & Weights & Models & Max.\ $|\Delta|$ & Decisions equal \\
+\midrule
+WHO rule & float64 & 54 & 0 & 125{,}976/125{,}976 \\
+Logistic regression & float64 & 54 & 1.4e-14 & 125{,}976/125{,}976 \\
+Boosted trees & float64 & 54 & 0 & 125{,}976/125{,}976 \\
+GRU & float32 & 54 & 3.9e{-}06 & 125{,}976/125{,}976 \\
+ & int8 & 54 & 4.5e{-}06 & 125{,}976/125{,}976 \\
+TCN & float32 & 54 & 3.8e{-}06 & 125{,}976/125{,}976 \\
+ & int8 & 54 & 4.1e{-}06 & 125{,}976/125{,}976 \\
+CNN--GRU hybrid & float32 & 54 & 4.3e{-}06 & 125{,}976/125{,}976 \\
+ & int8 & 54 & 4.6e{-}06 & 125{,}976/125{,}976 \\
+\bottomrule
+\end{tabular}

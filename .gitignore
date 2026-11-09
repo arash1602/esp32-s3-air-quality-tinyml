@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pio/
+managed_components/
+dependencies.lock
+sdkconfig.*
+!sdkconfig.defaults
+c/aq_native
+export_out/
+export_classical/
+tflm_out/
+hil_results*/
+*.cur
+*.dig

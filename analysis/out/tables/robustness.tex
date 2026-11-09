@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering
+\caption{Sensitivity of the deployed models to sensor error. Every test window is perturbed as stated and run through the C library. $\Delta$AP, $\Delta F_2$: change in AP and in $F_2$ in points ($\times100$), mean over the 54 test folds; Chg.: share of the 125{,}976 test-window decisions that change (\%).}
+\label{tab:robust}
+\footnotesize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{lrrrrrrrrrrrrrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{WHO} & \multicolumn{3}{c}{LR} & \multicolumn{3}{c}{GBT} & \multicolumn{3}{c}{GRU} & \multicolumn{3}{c}{TCN} & \multicolumn{3}{c}{CNN--GRU} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}
+Perturbation & $\Delta$AP & $\Delta F_2$ & Chg. & $\Delta$AP & $\Delta F_2$ & Chg. & $\Delta$AP & $\Delta F_2$ & Chg. & $\Delta$AP & $\Delta F_2$ & Chg. & $\Delta$AP & $\Delta F_2$ & Chg. & $\Delta$AP & $\Delta F_2$ & Chg. \\
+\midrule
+PM $\times0.70$ & 0.0 & $-$10.8 & 9.3 & $-$0.7 & $-$1.9 & 3.9 & $-$0.8 & $-$2.8 & 8.9 & $-$0.4 & $-$3.0 & 8.7 & $-$0.9 & $-$3.4 & 8.8 & $-$0.7 & $-$2.6 & 8.5 \\
+PM $\times0.85$ & 0.0 & $-$4.8 & 4.8 & $-$0.1 & $-$0.5 & 1.8 & $-$0.1 & $-$0.8 & 4.9 & $-$0.2 & $-$0.8 & 3.9 & $-$0.2 & $-$1.2 & 4.0 & $-$0.3 & $-$0.9 & 3.8 \\
+PM $\times1.15$ & 0.0 & +4.7 & 5.0 & $-$0.1 & +0.1 & 1.7 & $-$0.3 & $-$0.1 & 4.3 & +0.1 & +0.1 & 3.4 & +0.1 & $-$0.1 & 3.2 & 0.0 & +0.2 & 3.2 \\
+PM $\times1.50$ & 0.0 & +13.9 & 16.4 & $-$0.6 & $-$0.4 & 4.9 & $-$1.1 & $-$0.1 & 9.9 & +0.2 & $-$0.3 & 9.6 & $-$0.1 & $-$1.1 & 9.3 & $-$0.2 & $-$0.3 & 8.9 \\
+PM $-5\,\mu$g/m$^3$ & $-$1.8 & $-$7.7 & 7.2 & $-$1.8 & $-$5.4 & 12.5 & $-$4.0 & $-$10.3 & 20.1 & $-$4.7 & $-$20.5 & 31.5 & $-$5.4 & $-$20.6 & 30.7 & $-$5.8 & $-$19.2 & 32.3 \\
+PM $+5\,\mu$g/m$^3$ & 0.0 & +12.9 & 15.8 & 0.0 & $-$3.3 & 16.1 & $-$4.9 & $-$3.1 & 20.9 & $-$4.6 & $-$6.7 & 34.7 & $-$4.8 & $-$6.2 & 34.4 & $-$5.3 & $-$5.5 & 33.2 \\
+$T$ $+3\,^\circ$C & 0.0 & 0.0 & 0.0 & +0.2 & $-$2.1 & 13.9 & $-$0.8 & $-$2.2 & 11.6 & $-$0.6 & $-$2.4 & 18.0 & $-$1.7 & $-$2.9 & 17.4 & $-$1.5 & $-$2.1 & 16.7 \\
+RH $-10$\,\% & 0.0 & 0.0 & 0.0 & $-$0.6 & $-$1.1 & 17.8 & $-$2.3 & $-$1.6 & 13.7 & $-$0.9 & $-$1.4 & 18.6 & $-$1.4 & $-$2.2 & 18.6 & $-$1.0 & $-$0.4 & 17.0 \\
+\bottomrule
+\end{tabular}
+\end{table*}

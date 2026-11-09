@@ -1,0 +1,9 @@
+[
+ {
+  "free_heap": 175364,
+  "min_free_heap": 169868,
+  "stack_free": 6404,
+  "aq_static_bytes": 147424,
+  "cpu_mhz": 240
+ }
+]

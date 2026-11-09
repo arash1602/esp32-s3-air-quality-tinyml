@@ -1,0 +1,36 @@
+{
+ "sensa-base": {
+  "RAM": {
+   "used": 29620,
+   "total": 327680
+  },
+  "Flash": {
+   "used": 732643,
+   "total": 3342336
+  }
+ },
+ "sensa-aq": {
+  "RAM": {
+   "used": 70132,
+   "total": 327680
+  },
+  "Flash": {
+   "used": 796907,
+   "total": 3342336
+  }
+ },
+ "sensa-aq-generic": {
+  "RAM": {
+   "used": 112684,
+   "total": 327680
+  },
+  "Flash": {
+   "used": 797055,
+   "total": 3342336
+  }
+ },
+ "added_RAM": 40512,
+ "added_generic_RAM": 83064,
+ "added_Flash": 64264,
+ "added_generic_Flash": 64412
+}
