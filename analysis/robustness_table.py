@@ -6,7 +6,7 @@ AR = [("WHO", "WHO"), ("LR", "LR"), ("GBT", "GBT"), ("GRU", "GRU"), ("TCN", "TCN
 SC = [("pm_gain_0.70", r"PM $\times0.70$"), ("pm_gain_0.85", r"PM $\times0.85$"),
       ("pm_gain_1.15", r"PM $\times1.15$"), ("pm_gain_1.50", r"PM $\times1.50$"),
       ("pm_offset_-5", r"PM $-5\,\mu$g/m$^3$"), ("pm_offset_+5", r"PM $+5\,\mu$g/m$^3$"),
-      ("t_offset_+3", r"$T$ $+3\,^\circ$C"), ("rh_offset_-10", r"RH $-10$\,\%")]
+      ("t_offset_+3", r"$T$ $+3\,^\circ$C"), ("rh_offset_-10", r"RH $-10$\,pp")]
 def f(x):
     # in points (x 100), one decimal
     v = round(100 * x, 1)

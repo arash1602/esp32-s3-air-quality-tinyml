@@ -196,7 +196,7 @@ def sensitivity():
     a = json.load(open(os.path.join(OUT, "robustness.json")))
     SC = [("pm_gain_0.70", "PM ×0.70"), ("pm_gain_0.85", "PM ×0.85"), ("pm_gain_1.15", "PM ×1.15"),
           ("pm_gain_1.30", "PM ×1.30"), ("pm_gain_1.50", "PM ×1.50"), ("pm_offset_-5", "PM −5 µg/m³"),
-          ("pm_offset_+5", "PM +5 µg/m³"), ("t_offset_+3", "T +3 °C"), ("rh_offset_-10", "RH −10 %")]
+          ("pm_offset_+5", "PM +5 µg/m³"), ("t_offset_+3", "T +3 °C"), ("rh_offset_-10", "RH −10 pp")]
     blue = ["#104281", "#2a78d6", "#86b6ef"]
     red = ["#f4a6a6", "#d03b3b", "#8e1f1f"]
     div = LinearSegmentedColormap.from_list("div", red[::-1] + ["#f0efec"] + blue[::-1])  # loss = red
