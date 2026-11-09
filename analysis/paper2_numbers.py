@@ -267,7 +267,7 @@ def write_tables(num):
     L = [r"\begin{tabular}{ll" + "r" * 6 + "}", r"\toprule",
          r" & & \multicolumn{3}{c}{Within city} & \multicolumn{3}{c}{Across cities} \\",
          r"\cmidrule(lr){3-5}\cmidrule(lr){6-8}",
-         r"Model & Weights & 1 h & 12 h & 24 h & 1 h & 12 h & 24 h \\", r"\midrule"]
+         r"Model & Precision & 1 h & 12 h & 24 h & 1 h & 12 h & 24 h \\", r"\midrule"]
     for a in ALL:
         for prec in (("f64",) if a in CLS else ("f32", "int8")):
             v = [acc[f"h{h}/{d}/{a}/{prec}"]["ap_mean"] for d in DESIGNS for h in H]
