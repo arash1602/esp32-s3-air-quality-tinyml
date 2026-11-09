@@ -150,7 +150,7 @@ def speedup():
     ax.invert_yaxis()
     ax.set_xlim(0, 26)
     ax.axvline(1, color=MUTED, lw=0.6, ls=":")
-    ax.set_xlabel("Speed-up of the flash-aware kernels (weights in flash)")
+    ax.set_xlabel("Speed-up over straightforward kernels (×), weights in flash")
     for sp in ("top", "right"):
         ax.spines[sp].set_visible(False)
     ax.tick_params(labelsize=6.5, width=0.5, length=2.5)
