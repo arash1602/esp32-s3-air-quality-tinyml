@@ -40,7 +40,7 @@ for f, ix in (("ppk2_results_tflm_a.json", "tflm_a_index.json"),
         tf[k]["mJ"] = m["energy_mJ"]
         tf[k]["ms_ppk2"] = m["high_median_us"] / 1e3
 NAME = {"TCN": "TCN", "FUSION": "CNN--GRU", "GRU": "GRU"}
-PREC = {"f32": "float32", "int8": "8-bit"}
+PREC = {"f32": "float32", "int8": "int8"}
 rows, summary = [], {}
 def rng(v, f):
     v = sorted(v); a, b = f(v[0]), f(v[-1]); return a if a == b else f"{a}--{b}"
@@ -66,13 +66,17 @@ for arch in ("TCN", "FUSION", "GRU"):
                     f"{rng(s['arena_kb'], f1)} & {rng(s['time_ratio'], lambda x: f'{x:.1f}')} & "
                     f"{rng(s['energy_ratio'], lambda x: f'{x:.1f}')} & {ch}/{n:,}".replace(",", "{,}") + r" \\")
 T = [r"\begin{table*}[t]", r"\centering",
-     r"\caption{The same 36 trained networks (the fidelity configurations: three horizons, within and across cities) run by TensorFlow Lite Micro (TFLM, esp-tflite-micro~1.4.2 with ESP-NN kernels, ESP-IDF~6.1) and by the library of this paper on the same board. Fit: networks that run with a 256\,KB tensor arena. Arena: TFLM's working memory per network. Time and energy: ratio TFLM/aq\_infer per network (PPK2, 3.3\,V, energy above idle). Decisions changed: TFLM against the reference on all test windows of each fold (PC interpreter). TFLM's 8-bit mode quantizes activations as well as weights; GRUs are unrolled over the 24 time steps, as TFLM has no GRU operator.}",
+     r"\caption{The library of this paper (aq\_infer) against TensorFlow Lite Micro (TFLM) on the ESP32-S3: model storage, working memory, latency, energy and numerical fidelity.}",
      r"\label{tab:tflm}", r"\footnotesize", r"\setlength{\tabcolsep}{4pt}",
      r"\begin{tabular}{llrrrrrrr}", r"\toprule",
-     r" & & & \multicolumn{2}{c}{Model file (KB)} & TFLM arena & \multicolumn{2}{c}{TFLM / aq\_infer} & Decisions changed \\",
+     r" & & TFLM & \multicolumn{2}{c}{Model file (KB)} & TFLM arena & \multicolumn{2}{c}{TFLM / aq\_infer} & Decisions changed \\",
      r"\cmidrule(lr){4-5}\cmidrule(lr){7-8}",
-     r"Network & Weights & Fit & aq\_infer & TFLM & (KB) & Time & Energy & by TFLM \\", r"\midrule"] + rows + \
-    [r"\bottomrule", r"\end{tabular}", r"\end{table*}"]
+     r"Network & Weights & fit & aq\_infer & TFLM & (KB) & Time & Energy & by TFLM (PC) \\", r"\midrule"] + rows + \
+    [r"\bottomrule", r"\end{tabular}",
+     r"",
+     r"\vspace{2pt}",
+     r"\parbox{\textwidth}{\scriptsize 36 trained networks (the fidelity configurations: three horizons, within and across cities), TFLM esp-tflite-micro~1.4.2 with ESP-NN kernels on ESP-IDF~6.1, same board. TFLM fit: configurations that run with a 256\,KB tensor arena; arena: TFLM's working memory per network. Time and energy: ratio TFLM/aq\_infer per network for the configurations that both run, so values above 1 favour aq\_infer; energy above idle at 3.3\,V (PPK2). Decisions changed: TFLM's PC interpreter against the reference on all 17{,}704 test windows of the six networks of each row; on the board, TFLM's ESP-NN kernels changed 13 further decisions of 17{,}000 sampled (Section~\ref{sec:tflm}). The two int8 schemes differ: aq\_infer quantizes weights only and keeps floating-point activations, TFLM quantizes weights and activations (full-integer). GRUs are unrolled over the 24 time steps in TFLM, which has no GRU operator.}",
+     r"\end{table*}"]
 os.makedirs(os.path.join(ROOT, "analysis/out/tables"), exist_ok=True)
 open(os.path.join(ROOT, "analysis/out/tables/tflm.tex"), "w").write("\n".join(T) + "\n")
 json.dump(summary, open(os.path.join(ROOT, "analysis/out/tflm_summary.json"), "w"), indent=1)
