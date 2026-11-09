@@ -212,7 +212,7 @@ def write_tables(num):
     names = {"WHO": "WHO rule", "LR": "Logistic regression", "GBT": "Boosted trees",
              "GRU": "GRU", "TCN": "TCN", "FUSION": "CNN--GRU hybrid"}
     L = [r"\begin{tabular}{llrrr}", r"\toprule",
-         r"Model & Weights & Parameters & Model file (KB) & MAC/prediction \\", r"\midrule"]
+         r"Model & Weights & Parameters & Model file (KB) & MACs per window \\", r"\midrule"]
     for a in ALL:
         for prec in (("f64",) if a in CLS else ("f32", "int8")):
             e = foot[f"{a}_{prec}"]
@@ -222,7 +222,8 @@ def write_tables(num):
                 par = f"{e['params_median']:,.0f} nodes ({e['params_min']:,}--{e['params_max']:,})"
             by = (f"{kb(e['bytes_median'])} ({kb(e['bytes_min'])}--{kb(e['bytes_max'])})"
                   if e["bytes_min"] != e["bytes_max"] else kb(e["bytes_min"]))
-            mac = (f"{e['macs_median'] / 1e3:,.0f}k ({e['macs_min'] / 1e3:,.0f}k--{e['macs_max'] / 1e3:,.0f}k)"
+            km = lambda x: f"{x / 1e6:.2f}M" if x >= 1e6 else f"{x / 1e3:,.0f}k"
+            mac = (f"{km(e['macs_median'])} ({km(e['macs_min'])}--{km(e['macs_max'])})"
                    if "macs_median" in e else "--")
             w = {"f64": "float64", "f32": "float32", "int8": "int8"}[prec]
             L.append(f"{names[a] if prec != 'int8' else ''} & {w} & {par} & {by} & {mac} \\\\")
