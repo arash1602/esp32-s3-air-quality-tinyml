@@ -217,19 +217,19 @@ def trace():
         cm = c[:n * k].reshape(n, k).mean(1)
         t = (np.arange(n) * k * dt) * 1e3
         dm = d[:n * k].reshape(n, k).mean(1) > 0.5
-        ax.fill_between(t, 30, 85, where=dm, color=COL["TCN"], alpha=0.13, lw=0,
+        ax.fill_between(t, 30, 92, where=dm, color=COL["TCN"], alpha=0.13, lw=0,
                         step="mid")
         for r0 in np.flatnonzero(np.diff(d.astype(np.int8)) == 1) + 1:   # prediction starts
-            ax.axvline(r0 * dt * 1e3, color="white", lw=1.0)
+            ax.axvline(r0 * dt * 1e3, color="#444444", lw=0.6, ls=(0, (2, 1.5)))
         ax.plot(t, cm, color=COL["TCN"] if i == 2 else "#a8426f", lw=0.8)
         idle = res[i]["idle_mA"]
         ax.axhline(idle, color=MUTED, lw=0.6, ls=(0, (3, 2)))
         m = res[i]
-        ax.text(0.99, 0.93, f"{lab}: {m['high_median_us'] / 1e3:.1f} ms, "
+        ax.text(0.99, 0.985, f"{lab}: {m['high_median_us'] / 1e3:.1f} ms, "
                 f"{m['energy_mJ']:.2f} mJ per prediction", transform=ax.transAxes,
                 ha="right", va="top", fontsize=7.4, color=INK,
                 bbox=dict(fc="white", ec="none", pad=0.6, alpha=0.85))
-        ax.set_ylim(30, 85)
+        ax.set_ylim(30, 92)
         ax.set_yticks([40, 60, 80])
         ax.grid(axis="y", color=GRID, lw=0.4)
         ax.set_axisbelow(True)
