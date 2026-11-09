@@ -69,7 +69,7 @@ def tradeoff():
     en = energies()
     fig, axes = plt.subplots(2, 2, figsize=(3.5, 3.95), sharey=True)
     for r, (xkind, xlabel) in enumerate((("size", "Model file (bytes)"),
-                                         ("energy", "Energy per prediction (mJ)"))):
+                                         ("energy", "Incremental energy per prediction (mJ)"))):
         for c, (dsg, title) in enumerate(DES):
             ax = axes[r, c]
             pts = {}
@@ -87,12 +87,45 @@ def tradeoff():
                     ax.annotate("", xy=(x1, y1), xytext=(x0, y0), zorder=2,
                                 arrowprops=dict(arrowstyle="-|>", color=COL[a], lw=0.6,
                                                 shrinkA=3.5, shrinkB=3.5, mutation_scale=6))
-            if (r, c) in ((0, 0), (1, 1)):
+            if r == 0 and c == 0:
                 x, y = pts[("TCN", "int8")]
-                ax.annotate("8-bit TCN", xy=(x, y), xytext=(x * (0.012 if xkind == "size" else 0.05),
-                            y + (0.04 if xkind == "size" else 0.075)), fontsize=6.9, color=INK, zorder=5,
+                ax.annotate("8-bit TCN\n(deployed)", xy=(x, y), xytext=(x * 0.012, y + 0.035),
+                            fontsize=6.6, color=INK, zorder=5, ha="left", linespacing=0.95,
                             arrowprops=dict(arrowstyle="-|>", color=INK, lw=0.5, shrinkA=1,
                                             shrinkB=2.2, mutation_scale=5))
+            if r == 1:
+                # the networks lie within a factor of three in energy: show them enlarged
+                nets = [pts[(a, p)] for a in ("GRU", "TCN", "FUSION") for p in ("f32", "int8")]
+                xs, ys = [q[0] for q in nets], [q[1] for q in nets]
+                x0, x1 = min(xs) / 1.12, max(xs) * 1.12
+                y0, y1 = min(ys) - 0.012, max(ys) + 0.012
+                ax.add_patch(plt.Rectangle((x0, y0), x1 - x0, y1 - y0, fill=False, lw=0.45,
+                                           ls=(0, (2, 1.5)), ec=MUTED, zorder=1))
+                box = [0.27, 0.06, 0.62, 0.40] if c == 0 else [0.17, 0.60, 0.62, 0.37]
+                ins = ax.inset_axes(box)
+                for a in ("GRU", "TCN", "FUSION"):
+                    for p in ("f32", "int8"):
+                        x, y = pts[(a, p)]
+                        ins.scatter(x, y, marker=MK[a], s=26, zorder=3, linewidths=0.7,
+                                    facecolors=COL[a] if p != "int8" else "white", edgecolors=COL[a])
+                    (xa, ya), (xb, yb) = pts[(a, "f32")], pts[(a, "int8")]
+                    ins.annotate("", xy=(xb, yb), xytext=(xa, ya), zorder=2,
+                                 arrowprops=dict(arrowstyle="-|>", color=COL[a], lw=0.6,
+                                                 shrinkA=3.5, shrinkB=3.5, mutation_scale=6))
+                pad = 0.25 * (max(ys) - min(ys)) + 0.004
+                ins.set_xlim(min(xs) - 0.35, max(xs) + 0.35)
+                ins.set_ylim(min(ys) - pad, max(ys) + pad)
+                ins.tick_params(labelsize=5.2, width=0.4, length=1.6, pad=1, left=False, labelleft=False,
+                                right=True, labelright=True)
+                ins.set_facecolor("white")
+                for sp in ins.spines.values():
+                    sp.set_linewidth(0.45)
+                    sp.set_edgecolor(MUTED)
+                ins.grid(color="#f0f0f0", lw=0.3)
+                ins.set_axisbelow(True)
+                x, y = pts[("TCN", "int8")]
+                ins.annotate("deployed", xy=(x, y), xytext=(-6, 0), textcoords="offset points",
+                             fontsize=5.6, color=INK, ha="right", va="center")
             ax.set_xscale("log")
             ax.set_ylim(0.43, 0.80)
             ax.grid(color="#f0f0f0", lw=0.3)
