@@ -51,7 +51,7 @@ for arch in ("WHO", "LR", "GBT", "GRU", "TCN", "FUSION"):
         rms = [r["median_us"] / 1e3 for r in ra.values()]
         nofit = len(fl) - len(ra)
         rcell = rng(rms) if rms else "--"
-        if nofit: rcell += f"$^{{*}}$"
+        if nofit: rcell += f"$^{{({len(ra)})}}$"
         ens = [energy_mj(r) for r in fl.values()]
         ens = [x for x in ens if x is not None]
         ecell = rng(ens) if len(ens) == len(fl) else "--"
@@ -66,7 +66,7 @@ T = [r"\begin{table}[t]", r"\centering",
      r"\label{tab:latency}", r"\footnotesize", r"\setlength{\tabcolsep}{3pt}",
      r"\begin{tabular}{llrrrrr}", r"\toprule",
      r" & & & & \multicolumn{2}{c}{Latency (ms)} & Energy \\", r"\cmidrule(lr){5-6}",
-     r"Model & Weights & $n$ & KB & Flash & RAM & (mJ) \\", r"\midrule"] + rows + \
+     r"Model & Weights & $n$ & File (KB) & Flash & RAM & (mJ) \\", r"\midrule"] + rows + \
     [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
 # speed-up of the flash-aware kernels, weights in flash
 v1k = {(r["index"], r["weights_in"]): r for r in v1}
