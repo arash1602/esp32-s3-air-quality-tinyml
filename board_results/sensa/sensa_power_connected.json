@@ -10,11 +10,11 @@
  "skip_s": 60.0,
  "recorded_s": 540.0,
  "supply_V": 5.0,
- "i_mean_mA": 134.4502916980249,
- "p_mean_mW": 672.2514584901245,
- "i_without_predictions_mA": 134.35774261927176,
- "p_without_predictions_mW": 671.7887130963588,
- "energy_per_hour_J": 2420.105250564448,
+ "i_mean_mA": 134.45029169802496,
+ "p_mean_mW": 672.2514584901248,
+ "i_without_predictions_mA": 134.3577426192722,
+ "p_without_predictions_mW": 671.7887130963609,
+ "energy_per_hour_J": 2420.1052505644493,
  "i_p01_p50_p99_mA": [
   101.3181015625,
   135.331703125,
@@ -25,51 +25,51 @@
   {
    "t_s": 90.36601,
    "duration_ms": 188.82,
-   "i_mean_mA": 163.9196876605365,
+   "i_mean_mA": 163.91968766053648,
    "i_before_mA": 134.42866740953124,
-   "energy_above_before_mJ": 27.842472218974077
+   "energy_above_before_mJ": 27.84247221897404
   },
   {
    "t_s": 150.79067,
    "duration_ms": 188.88,
-   "i_mean_mA": 163.81741698432867,
+   "i_mean_mA": 163.81741698432864,
    "i_before_mA": 134.29514171859375,
-   "energy_above_before_mJ": 27.880836760960044
+   "energy_above_before_mJ": 27.880836760960026
   },
   {
    "t_s": 210.20808,
    "duration_ms": 188.78,
-   "i_mean_mA": 163.86780913091627,
-   "i_before_mA": 134.40440936843748,
+   "i_mean_mA": 163.8678091309163,
+   "i_before_mA": 134.4044093684375,
    "energy_above_before_mJ": 27.81050303580372
   },
   {
    "t_s": 270.63602000000003,
    "duration_ms": 188.78,
-   "i_mean_mA": 163.97264945596396,
+   "i_mean_mA": 163.97264945596393,
    "i_before_mA": 134.4346619165625,
-   "energy_above_before_mJ": 27.880906438441038
+   "energy_above_before_mJ": 27.88090643844102
   },
   {
    "t_s": 331.06206,
    "duration_ms": 188.82,
-   "i_mean_mA": 163.7924982001708,
+   "i_mean_mA": 163.79249820017077,
    "i_before_mA": 134.0877986321875,
-   "energy_above_before_mJ": 28.044206862133034
+   "energy_above_before_mJ": 28.044206862133
   },
   {
    "t_s": 390.47564,
    "duration_ms": 188.89000000000001,
-   "i_mean_mA": 163.6090323915374,
+   "i_mean_mA": 163.60903239153743,
    "i_before_mA": 134.1060510578125,
-   "energy_above_before_mJ": 27.864090720636483
+   "energy_above_before_mJ": 27.86409072063652
   },
   {
    "t_s": 450.90095,
    "duration_ms": 188.75,
-   "i_mean_mA": 163.9506520678808,
+   "i_mean_mA": 163.95065206788078,
    "i_before_mA": 134.52364222,
-   "energy_above_before_mJ": 27.771740543937522
+   "energy_above_before_mJ": 27.771740543937504
   },
   {
    "t_s": 510.31823,
@@ -87,6 +87,6 @@
   }
  ],
  "prediction_ms_median": 188.82,
- "prediction_mJ_median": 27.842472218974077,
- "prediction_share_of_hourly_energy": 1.150465344946477e-05
+ "prediction_mJ_median": 27.84247221897404,
+ "prediction_share_of_hourly_energy": 1.1504653449464749e-05
 }

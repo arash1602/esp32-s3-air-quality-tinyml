@@ -31,6 +31,8 @@ def main() -> int:
     ap.add_argument("name")
     ap.add_argument("--skip", type=float, default=60.0, help="start-up to leave out, s")
     ap.add_argument("--glitch-high", type=int, default=10)
+    ap.add_argument("--glitch-low", type=int, default=100,
+                    help="low gaps up to this many samples inside a prediction are glitches")
     ap.add_argument("-o", "--out", default=None)
     a = ap.parse_args()
     meta = json.load(open(a.name + ".json"))
@@ -46,6 +48,10 @@ def main() -> int:
     s, e = runs(d0)
     keep = (e - s) > a.glitch_high
     s, e = s[keep], e[keep]
+    # join a prediction split by a short low glitch on the logic input
+    if len(s) > 1:
+        join = (s[1:] - e[:-1]) <= a.glitch_low
+        s, e = s[np.r_[True, ~join]], e[np.r_[~join, True]]
     t_rec = len(c) / rate
     i_mean = float(c.mean())
     mask = np.ones(len(c), bool)
