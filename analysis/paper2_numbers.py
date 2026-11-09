@@ -229,21 +229,27 @@ def write_tables(num):
     L += [r"\bottomrule", r"\end{tabular}"]
     open(os.path.join(t, "footprint.tex"), "w").write("\n".join(L).replace(",", "{,}"))
 
+    def sci(x):
+        if x == 0:
+            return "0"
+        m, e = f"{x:.1e}".split("e")
+        return f"${m}\\times10^{{{int(e)}}}$"
     L = [r"\begin{tabular}{llrrr}", r"\toprule",
-         r"Model & Weights & Models & Max.\ $|\Delta|$ & Decisions equal \\", r"\midrule"]
+         r" & & & Max.\ absolute & Decisions \\",
+         r"Model & Weights & Folds & score error & equal \\", r"\midrule"]
     for a in CLS:
         e = fid[f"{a}_f64"]
-        L.append(f"{names[a]} & float64 & {e['models']} & {e['c_vs_sklearn_max_abs']:.1e} & "
-                 f"{e['decisions_equal']:,}/{e['windows']:,} \\\\")
+        L.append(f"{names[a]} & float64 & {e['models']} & {sci(e['c_vs_sklearn_max_abs'])} & "
+                 f"{100 * e['decisions_equal'] / e['windows']:.0f}\\,\\% \\\\")
     for a in NETS:
         for prec in ("f32", "int8"):
             e = fid[f"{a}_{prec}"]
             L.append(f"{names[a] if prec == 'f32' else ''} & {'float32' if prec == 'f32' else 'int8'} & "
-                     f"{e['models']} & {e['c_vs_numpy_max_abs']:.1e} & "
-                     f"{e['decisions_equal']:,}/{e['windows']:,} \\\\")
+                     f"{e['models']} & {sci(e['c_vs_numpy_max_abs'])} & "
+                     f"{100 * e['decisions_equal'] / e['windows']:.0f}\\,\\% \\\\")
     L += [r"\bottomrule", r"\end{tabular}"]
-    s = "\n".join(L).replace("e-0", "e{-}0").replace(",", "{,}")
-    open(os.path.join(t, "fidelity_pc.tex"), "w").write(s.replace("0.0e+00", "0"))
+    s = "\n".join(L)
+    open(os.path.join(t, "fidelity_pc.tex"), "w").write(s)
 
     L = [r"\begin{tabular}{lrrrrr}", r"\toprule",
          r"Model & Size ratio & Mean $\Delta$AP & Max.\ $|\Delta$AP$|$ & Max.\ $|\Delta F_2|$ & Decisions changed \\",
