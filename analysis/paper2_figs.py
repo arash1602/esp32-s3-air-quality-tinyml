@@ -15,6 +15,7 @@ import os
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
+import matplotlib.ticker
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap, TwoSlopeNorm
 from matplotlib.lines import Line2D
@@ -67,6 +68,7 @@ def energies():
 def tradeoff():
     acc = json.load(open(os.path.join(OUT, "numbers.json")))["accuracy"]
     en = energies()
+    C = {**COL, "TCN": "#c2407e"}            # darker magenta: contrast for open markers
     fig, axes = plt.subplots(2, 2, figsize=(3.5, 3.95), sharey=True)
     for r, (xkind, xlabel) in enumerate((("size", "Model file (bytes)"),
                                          ("energy", "Incremental energy per prediction (mJ)"))):
@@ -81,11 +83,11 @@ def tradeoff():
                          else 1e3 * float(np.median([en[(h, dsg, a, prec)] for h in H])))
                     pts[(a, prec)] = (x, y)
                     ax.scatter(x, y, marker=MK[a], s=24, zorder=3, linewidths=0.7,
-                               facecolors=COL[a] if prec != "int8" else "white", edgecolors=COL[a])
+                               facecolors=C[a] if prec != "int8" else "white", edgecolors=C[a])
                 if a not in ("WHO", "LR", "GBT"):
                     (x0, y0), (x1, y1) = pts[(a, "f32")], pts[(a, "int8")]
                     ax.annotate("", xy=(x1, y1), xytext=(x0, y0), zorder=2,
-                                arrowprops=dict(arrowstyle="-|>", color=COL[a], lw=0.6,
+                                arrowprops=dict(arrowstyle="-|>", color=C[a], lw=0.6,
                                                 shrinkA=3.5, shrinkB=3.5, mutation_scale=6))
             if r == 0 and c == 0:
                 x, y = pts[("TCN", "int8")]
@@ -94,38 +96,47 @@ def tradeoff():
                             arrowprops=dict(arrowstyle="-|>", color=INK, lw=0.5, shrinkA=1,
                                             shrinkB=2.2, mutation_scale=5))
             if r == 1:
-                # the networks lie within a factor of three in energy: show them enlarged
+                # the networks lie within a factor of three in energy: enlarge them
                 nets = [pts[(a, p)] for a in ("GRU", "TCN", "FUSION") for p in ("f32", "int8")]
                 xs, ys = [q[0] for q in nets], [q[1] for q in nets]
-                x0, x1 = min(xs) / 1.12, max(xs) * 1.12
-                y0, y1 = min(ys) - 0.012, max(ys) + 0.012
-                ax.add_patch(plt.Rectangle((x0, y0), x1 - x0, y1 - y0, fill=False, lw=0.45,
-                                           ls=(0, (2, 1.5)), ec=MUTED, zorder=1))
-                box = [0.27, 0.06, 0.62, 0.40] if c == 0 else [0.17, 0.60, 0.62, 0.37]
+                box = [0.40, 0.07, 0.50, 0.31] if c == 0 else [0.27, 0.64, 0.50, 0.30]
                 ins = ax.inset_axes(box)
                 for a in ("GRU", "TCN", "FUSION"):
                     for p in ("f32", "int8"):
                         x, y = pts[(a, p)]
-                        ins.scatter(x, y, marker=MK[a], s=26, zorder=3, linewidths=0.7,
-                                    facecolors=COL[a] if p != "int8" else "white", edgecolors=COL[a])
+                        ins.scatter(x, y, marker=MK[a], s=18, zorder=3, linewidths=0.65,
+                                    facecolors=C[a] if p != "int8" else "white", edgecolors=C[a])
                     (xa, ya), (xb, yb) = pts[(a, "f32")], pts[(a, "int8")]
                     ins.annotate("", xy=(xb, yb), xytext=(xa, ya), zorder=2,
-                                 arrowprops=dict(arrowstyle="-|>", color=COL[a], lw=0.6,
-                                                 shrinkA=3.5, shrinkB=3.5, mutation_scale=6))
-                pad = 0.25 * (max(ys) - min(ys)) + 0.004
-                ins.set_xlim(min(xs) - 0.35, max(xs) + 0.35)
+                                 arrowprops=dict(arrowstyle="-|>", color=C[a], lw=0.55,
+                                                 shrinkA=3, shrinkB=3, mutation_scale=5))
+                pad = 0.30 * (max(ys) - min(ys)) + 0.004
+                ins.set_xscale("log")
+                ins.set_xlim(min(xs) / 1.15, max(xs) * 1.15)
                 ins.set_ylim(min(ys) - pad, max(ys) + pad)
-                ins.tick_params(labelsize=5.2, width=0.4, length=1.6, pad=1, left=False, labelleft=False,
-                                right=True, labelright=True)
+                ins.xaxis.set_major_locator(matplotlib.ticker.FixedLocator([2, 3]))
+                ins.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
+                ins.xaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter("%g"))
+                ins.yaxis.set_major_locator(matplotlib.ticker.MaxNLocator(2))
+                ins.tick_params(labelsize=4.8, width=0.35, length=1.3, pad=0.8)
                 ins.set_facecolor("white")
                 for sp in ins.spines.values():
                     sp.set_linewidth(0.45)
                     sp.set_edgecolor(MUTED)
                 ins.grid(color="#f0f0f0", lw=0.3)
                 ins.set_axisbelow(True)
-                x, y = pts[("TCN", "int8")]
-                ins.annotate("deployed", xy=(x, y), xytext=(-6, 0), textcoords="offset points",
-                             fontsize=5.6, color=INK, ha="right", va="center")
+                ins.text(0.97 if c == 1 else 0.03, 0.95, "Detail", transform=ins.transAxes,
+                         fontsize=5, color=MUTED, va="top", ha="right" if c == 1 else "left",
+                         style="italic")
+                rect, conns = ax.indicate_inset_zoom(ins, edgecolor=MUTED, alpha=1.0, lw=0.45)
+                rect.set_linestyle((0, (2, 1.5)))
+                for cn in (conns if conns is not None else []):
+                    cn.set_linewidth(0.35)
+                    cn.set_linestyle((0, (2, 1.5)))
+                if c == 1:
+                    x, y = pts[("TCN", "int8")]
+                    ins.annotate("deployed", xy=(x, y), xytext=(0, 4.5), textcoords="offset points",
+                                 fontsize=5, color=INK, ha="center", va="bottom")
             ax.set_xscale("log")
             ax.set_ylim(0.43, 0.80)
             ax.grid(color="#f0f0f0", lw=0.3)
@@ -140,12 +151,12 @@ def tradeoff():
             if c == 0:
                 ax.set_xlabel(xlabel, fontsize=7.2, labelpad=1.5, x=1.06)
     fig.text(0.015, 0.56, "Mean AP over test folds", rotation=90, va="center", fontsize=7.5, color=INK)
-    fam = [Line2D([], [], ls="", marker=MK[a], color=COL[a], ms=4.5, label=NAME[a]) for a in ARCHS]
+    fam = [Line2D([], [], ls="", marker=MK[a], color=C[a], ms=4.5, label=NAME[a]) for a in ARCHS]
     from matplotlib.legend_handler import HandlerPatch
     from matplotlib.patches import FancyArrowPatch
     class _Arrow(HandlerPatch):
         def create_artists(self, legend, orig, x0, y0, w, h, fs, trans):
-            p = FancyArrowPatch((x0, y0 + h / 2), (x0 + w, y0 + h / 2), arrowstyle="-|>",
+            p = FancyArrowPatch((x0 + w, y0 + h / 2), (x0, y0 + h / 2), arrowstyle="-|>",
                                 mutation_scale=6, lw=0.6, color=MUTED)
             p.set_transform(trans)
             return [p]
@@ -156,7 +167,7 @@ def tradeoff():
             arrow]
     fig.legend(handles=fam, loc="lower center", ncol=6, frameon=False, fontsize=6.9,
                handletextpad=0.1, columnspacing=0.6, bbox_to_anchor=(0.53, 0.035))
-    fig.legend(handles=prec, labels=["floating-point weights", "8-bit weights", "quantization"],
+    fig.legend(handles=prec, labels=["floating-point weights", "8-bit weights", "float32 → int8"],
                handler_map={FancyArrowPatch: _Arrow()}, loc="lower center", ncol=3, frameon=False,
                fontsize=6.9, handletextpad=0.3, columnspacing=1.0, bbox_to_anchor=(0.53, -0.005))
     fig.subplots_adjust(left=0.13, right=0.98, top=0.94, bottom=0.17, hspace=0.48, wspace=0.12)
