@@ -27,7 +27,7 @@ for img, f in (("timing", "energy/energy_results_timing.json"),
 def energy_mj(r):
     m = PE.get((r["image"], r["index"]))
     return None if m is None else m["energy_mJ"]
-NAME = {"WHO": "WHO rule", "LR": "Logistic regr.", "GBT": "Boosted trees", "GRU": "GRU",
+NAME = {"WHO": "WHO rule", "LR": "LR", "GBT": "GBT", "GRU": "GRU",
         "TCN": "TCN", "FUSION": "CNN--GRU"}
 PREC = {"f64": "float64", "f32": "float32", "int8": "int8"}
 def ms(x):
