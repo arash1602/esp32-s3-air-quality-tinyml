@@ -118,7 +118,7 @@ def tradeoff():
                 ins.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
                 ins.xaxis.set_major_formatter(matplotlib.ticker.FormatStrFormatter("%g"))
                 ins.yaxis.set_major_locator(matplotlib.ticker.MaxNLocator(2))
-                ins.tick_params(labelsize=4.8, width=0.35, length=1.3, pad=0.8)
+                ins.tick_params(labelsize=5.4, width=0.35, length=1.3, pad=0.8)
                 ins.set_facecolor("white")
                 for sp in ins.spines.values():
                     sp.set_linewidth(0.45)
@@ -126,7 +126,7 @@ def tradeoff():
                 ins.grid(color="#f0f0f0", lw=0.3)
                 ins.set_axisbelow(True)
                 ins.text(0.97 if c == 1 else 0.03, 0.06 if c == 1 else 0.95, "Detail",
-                         transform=ins.transAxes, fontsize=5, color=MUTED,
+                         transform=ins.transAxes, fontsize=5.6, color=MUTED,
                          va="bottom" if c == 1 else "top", ha="right" if c == 1 else "left",
                          style="italic")
                 rect, conns = ax.indicate_inset_zoom(ins, edgecolor=MUTED, alpha=1.0, lw=0.45)
@@ -138,7 +138,7 @@ def tradeoff():
                 if c == 1:
                     x, y = pts[("TCN", "int8")]
                     ins.annotate("deployed", xy=(x, y), xytext=(3.4, 0.5945), textcoords="data",
-                                 fontsize=5, color=INK, ha="center", va="bottom",
+                                 fontsize=5.7, color=INK, ha="center", va="bottom",
                                  arrowprops=dict(arrowstyle="-|>", color=INK, lw=0.4, shrinkA=0.5,
                                                  shrinkB=2.5, mutation_scale=4))
             ax.set_xscale("log")
