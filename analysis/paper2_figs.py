@@ -99,7 +99,7 @@ def tradeoff():
                 # the networks lie within a factor of three in energy: enlarge them
                 nets = [pts[(a, p)] for a in ("GRU", "TCN", "FUSION") for p in ("f32", "int8")]
                 xs, ys = [q[0] for q in nets], [q[1] for q in nets]
-                box = [0.40, 0.07, 0.50, 0.31] if c == 0 else [0.27, 0.64, 0.50, 0.30]
+                box = [0.47, 0.07, 0.50, 0.31] if c == 0 else [0.27, 0.64, 0.50, 0.30]
                 ins = ax.inset_axes(box)
                 for a in ("GRU", "TCN", "FUSION"):
                     for p in ("f32", "int8"):
@@ -125,18 +125,22 @@ def tradeoff():
                     sp.set_edgecolor(MUTED)
                 ins.grid(color="#f0f0f0", lw=0.3)
                 ins.set_axisbelow(True)
-                ins.text(0.97 if c == 1 else 0.03, 0.95, "Detail", transform=ins.transAxes,
-                         fontsize=5, color=MUTED, va="top", ha="right" if c == 1 else "left",
+                ins.text(0.97 if c == 1 else 0.03, 0.06 if c == 1 else 0.95, "Detail",
+                         transform=ins.transAxes, fontsize=5, color=MUTED,
+                         va="bottom" if c == 1 else "top", ha="right" if c == 1 else "left",
                          style="italic")
                 rect, conns = ax.indicate_inset_zoom(ins, edgecolor=MUTED, alpha=1.0, lw=0.45)
                 rect.set_linestyle((0, (2, 1.5)))
                 for cn in (conns if conns is not None else []):
-                    cn.set_linewidth(0.35)
-                    cn.set_linestyle((0, (2, 1.5)))
+                    cn.set_linewidth(0.3)
+                    cn.set_color("#b8b8b8")
+                    cn.set_linestyle((0, (1.5, 1.5)))
                 if c == 1:
                     x, y = pts[("TCN", "int8")]
-                    ins.annotate("deployed", xy=(x, y), xytext=(0, 4.5), textcoords="offset points",
-                                 fontsize=5, color=INK, ha="center", va="bottom")
+                    ins.annotate("deployed", xy=(x, y), xytext=(3.4, 0.5945), textcoords="data",
+                                 fontsize=5, color=INK, ha="center", va="bottom",
+                                 arrowprops=dict(arrowstyle="-|>", color=INK, lw=0.4, shrinkA=0.5,
+                                                 shrinkB=2.5, mutation_scale=4))
             ax.set_xscale("log")
             ax.set_ylim(0.43, 0.80)
             ax.grid(color="#f0f0f0", lw=0.3)
@@ -164,10 +168,10 @@ def tradeoff():
     prec = [Line2D([], [], ls="", marker="v", color=MUTED, ms=4.5, label="floating-point weights"),
             Line2D([], [], ls="", marker="v", markerfacecolor="white", color=MUTED, ms=4.5,
                    label="8-bit weights"),
-            arrow]
+            Line2D([], [], ls="", marker="")]
     fig.legend(handles=fam, loc="lower center", ncol=6, frameon=False, fontsize=6.9,
                handletextpad=0.1, columnspacing=0.6, bbox_to_anchor=(0.53, 0.035))
-    fig.legend(handles=prec, labels=["floating-point weights", "8-bit weights", "float32 → int8"],
+    fig.legend(handles=prec, labels=["floating-point weights", "8-bit weights", "Arrows: float32 → int8"],
                handler_map={FancyArrowPatch: _Arrow()}, loc="lower center", ncol=3, frameon=False,
                fontsize=6.9, handletextpad=0.3, columnspacing=1.0, bbox_to_anchor=(0.53, -0.005))
     fig.subplots_adjust(left=0.13, right=0.98, top=0.94, bottom=0.17, hspace=0.48, wspace=0.12)
